@@ -1,5 +1,30 @@
+def encrypt(plaintext, key):
+    # Step 2: Shifting
+    shifted_text = ""
+    for char in plaintext:
+        if char.isalpha():
+            shifted_text += chr(((ord(char) - 65 + key) % 26) + 33)  # Shifting and converting to special characters
+        elif char == " ":
+            shifted_text += "@"
+        else:
+            shifted_text += char
+    
+    # concate string
+    reversed_text = shifted_text[::-1]
+    
+    matrix = [reversed_text[i:i+3] for i in range(0, len(reversed_text), 3)]
+    
+    # ciphertext
+    ciphertext = ""
+    for i in range(len(matrix)):
+        if i % 2 == 0:
+            ciphertext += matrix[i]
+        else:
+            ciphertext += matrix[i][::-1]
+    
+    return ciphertext
+
 def decrypt(ciphertext, key):
-    # Step 1: Get the matrix from the ciphertext in zigzag order
     matrix = []
     index = 0
     while index < len(ciphertext):
@@ -10,8 +35,8 @@ def decrypt(ciphertext, key):
         index += 3
     
     # Step 2: Reverse the matrix
-    matrix = matrix[::-1]
-    print("Reversed Matrix:")
+    # matrix = matrix[::-1]
+    # print("Reversed Matrix:")
     for row in matrix:
         print(row)
     
@@ -35,14 +60,12 @@ def decrypt(ciphertext, key):
         #     PTEXT += " "
         # else:
         #     PTEXT += char
-    print("PTEXT:", PTEXT)
+    print("Decrypted plaintext: ",PTEXT)
     return PTEXT
 
-ciphertext = "&35.)\"-617*"
-key = 1
+plaintext = input("ENter pt: ")
+key = int(input("entey key: "))
+ciphertext = encrypt(plaintext, key)
+print("Ciphertext:", ciphertext)
+ptext =decrypt(ciphertext, key)
 
-PTEXT = decrypt(ciphertext, key)
-
-
-
-#&35.)"-617*
