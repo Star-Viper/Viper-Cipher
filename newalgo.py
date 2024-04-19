@@ -1,5 +1,4 @@
 def encrypt(plaintext, key):
-    # Step 2: Shifting
     shifted_text = ""
     for char in plaintext:
         if char.isalpha():
@@ -8,10 +7,7 @@ def encrypt(plaintext, key):
             shifted_text += "@"
         else:
             shifted_text += char
-    
-    # concate string
     reversed_text = shifted_text[::-1]
-    
     matrix = [reversed_text[i:i+3] for i in range(0, len(reversed_text), 3)]
     
     # ciphertext
@@ -21,7 +17,6 @@ def encrypt(plaintext, key):
             ciphertext += matrix[i]
         else:
             ciphertext += matrix[i][::-1]
-    
     return ciphertext
 
 def decrypt(ciphertext, key):
@@ -45,12 +40,9 @@ def decrypt(ciphertext, key):
     for row in matrix:
         reversed_text += row
     print("Reversed Text:", reversed_text)
-    
-    # Step 4: Reverse the concatenated string
     reversed_text = reversed_text[::-1]
     print("Reversed Text After Reversal:", reversed_text)
-    
-    # Step 5: Shift the reversed text back to PTEXT
+
     PTEXT = ""
     for char in reversed_text:
         PTEXT += chr((ord(char) - 33 - key)  + 65)
@@ -63,7 +55,7 @@ def decrypt(ciphertext, key):
     print("Decrypted plaintext: ",PTEXT)
     return PTEXT
 
-plaintext = input("ENter pt: ")
+plaintext = input("ENter plaintext: ")
 key = int(input("entey key: "))
 ciphertext = encrypt(plaintext, key)
 print("Ciphertext:", ciphertext)
